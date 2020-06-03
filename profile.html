@@ -31,7 +31,80 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+<style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        * {box-sizing: border-box;}
+        
+        /* Button used to open the chat form - fixed at the bottom of the page */
+        .open-button {
+          background-color: #555;
+          color: white;
+          padding: 16px 20px;
+          border: none;
+          cursor: pointer;
+          opacity: 0.8;
+          position: inherit;
+          bottom: 23px;
+          right: 28px;
+          width: 280px;
+        }
+        
+        /* The popup chat - hidden by default */
+        .chat-popup {
+          display: none;
+          position: fixed;
+          bottom: 0;
+          right: 15px;
+          border: 3px solid #f1f1f1;
+          z-index: 9;
+        }
+        
+        /* Add styles to the form container */
+        .form-container {
+          max-width: 300px;
+          padding: 10px;
+          background-color: white;
+        }
+        
+        /* Full-width textarea */
+        .form-container textarea {
+          width: 100%;
+          padding: 15px;
+          margin: 5px 0 22px 0;
+          border: none;
+          background: #f1f1f1;
+          resize: none;
+          min-height: 200px;
+        }
+        
+        /* When the textarea gets focus, do something */
+        .form-container textarea:focus {
+          background-color: #ddd;
+          outline: none;
+        }
+        
+        /* Set a style for the submit/send button */
+        .form-container .btn {
+          background-color: #4CAF50;
+          color: white;
+          padding: 16px 20px;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+          margin-bottom:10px;
+          opacity: 0.8;
+        }
+        
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+          background-color: red;
+        }
+        
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover, .open-button:hover {
+          opacity: 1;
+        }
+        </style>
 </head>
 <body>
 
@@ -134,7 +207,33 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                 <div class="single-currency-box">
                                     <h4>New Wallet</h4>
-                                    <p><i class="ti-check"></i> Holdings Bank Corp</p>
+                                    <p><i class="ti-check"></i> Create new Wallet</p>
+                                    
+                                     <button class="open-button" onclick="openForm()">Create Wallet</button>
+
+<div class="chat-popup" id="myForm">
+  <form action="/action_page.php" class="form-container">
+    <h1>Create Wallet</h1>
+
+    <label for="msg"><b>Wallet Name</b></label>
+    <textarea placeholder="Wallet Name.." name="msg" required></textarea>
+
+    <button type="submit" class="btn">Create</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
