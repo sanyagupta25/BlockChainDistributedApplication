@@ -2,6 +2,7 @@ package com.example.accessingdatamongodb;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
@@ -32,8 +33,8 @@ public class Customer {
 	private String data; //our data will be a simple message.
 	private long timeStamp; //as number of milliseconds since 1/1/1970.
 	private int nonce;
-
-	
+	public String merkleRoot;
+	public ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
 	public Customer(String data,String previousHash ) {
 		this.data = data;
@@ -56,11 +57,26 @@ public class Customer {
 	
 	//Increases nonce value until hash target is reached.
 	public void mineBlock(int difficulty) {
+		merkleRoot = StringUtil.getMerkleRoot(transactions);
 		String target = StringUtil.getDificultyString(difficulty); //Create a string with difficulty * "0" 
 		while(!hash.substring( 0, difficulty).equals(target)) {
 			nonce ++;
 			hash = calculateHash();
 		}
 		System.out.println("Block Mined!!! : " + hash);
+	}
+	public boolean addTransaction(Transaction transaction) {
+		//process transaction and check if valid, unless block is genesis block then ignore.
+		if(transaction == null) return false;		
+		if((!"0".equals(previousHash))) {
+			if((transaction.processTransaction() != true)) {
+				System.out.println("Transaction failed to process. Discarded.");
+				return false;
+			}
+		}
+
+		transactions.add(transaction);
+		System.out.println("Transaction Successfully added to Block");
+		return true;
 	}
 }
