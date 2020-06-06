@@ -21,23 +21,23 @@ public class Customer {
 		this.previousHash = previousHash;
 	}
 
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
+//	public String getData() {
+//		return data;
+//	}
+//
+//	public void setData(String data) {
+//		this.data = data;
+//	}
 
 	public String previousHash; 
-	private String data; //our data will be a simple message.
+	
 	private long timeStamp; //as number of milliseconds since 1/1/1970.
 	private int nonce;
 	public String merkleRoot;
 	public ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
-	public Customer(String data,String previousHash ) {
-		this.data = data;
+	public Customer(String previousHash ) {
+		
 		this.previousHash = previousHash;
 		this.timeStamp = new Date().getTime();
 		
@@ -49,8 +49,8 @@ public class Customer {
 		String calculatedhash = StringUtil.applySha256( 
 				previousHash +
 				Long.toString(timeStamp) +
-				Integer.toString(nonce) + 
-				data 
+				Integer.toString(nonce) 
+				
 				);
 		return calculatedhash;
 	}

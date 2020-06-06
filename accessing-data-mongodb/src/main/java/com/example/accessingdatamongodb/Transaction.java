@@ -25,6 +25,8 @@ public class Transaction {
 		this.inputs = inputs;
 	}
 	
+	
+
 	public boolean processTransaction() {
 		
 		if(verifySignature() == false) {

@@ -3,14 +3,22 @@ package com.example.accessingdatamongodb;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
+import java.security.Provider;
 import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+@Configuration
 public class Wallet {
+	
 	public PrivateKey privateKey;
 	public PublicKey publicKey;
 	
@@ -21,6 +29,8 @@ public class Wallet {
 	}
 		
 	public void generateKeyPair() {
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+		//Security.addProvider(new Provider());
 		try {
 			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDSA","BC");
 			SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
@@ -73,4 +83,5 @@ public class Wallet {
 		
 		return newTransaction;
 	}
+	
 }
