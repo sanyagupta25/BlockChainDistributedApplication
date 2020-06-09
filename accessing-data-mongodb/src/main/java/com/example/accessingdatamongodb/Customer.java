@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="Books")
 public class Customer {
+	//@hide
+	//ArrayList<Transaction> transactions2 = new ArrayList<Transaction>();
 	@Id
 	public String hash;
 	public String getPreviousHash() {
@@ -34,7 +36,9 @@ public class Customer {
 	private long timeStamp; //as number of milliseconds since 1/1/1970.
 	private int nonce;
 	public String merkleRoot;
-	public ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+
+	
+	public ArrayList<String> transactions = new ArrayList<String>();
 
 	public Customer(String previousHash ) {
 		
@@ -56,27 +60,27 @@ public class Customer {
 	}
 	
 	//Increases nonce value until hash target is reached.
-	public void mineBlock(int difficulty) {
-		merkleRoot = StringUtil.getMerkleRoot(transactions);
-		String target = StringUtil.getDificultyString(difficulty); //Create a string with difficulty * "0" 
-		while(!hash.substring( 0, difficulty).equals(target)) {
-			nonce ++;
-			hash = calculateHash();
-		}
-		System.out.println("Block Mined!!! : " + hash);
-	}
-	public boolean addTransaction(Transaction transaction) {
-		//process transaction and check if valid, unless block is genesis block then ignore.
-		if(transaction == null) return false;		
-		if((!"0".equals(previousHash))) {
-			if((transaction.processTransaction() != true)) {
-				System.out.println("Transaction failed to process. Discarded.");
-				return false;
-			}
-		}
-
-		transactions.add(transaction);
-		System.out.println("Transaction Successfully added to Block");
-		return true;
-	}
+//	public void mineBlock(int difficulty) {
+//		merkleRoot = StringUtil.getMerkleRoot(transactions2);
+//		String target = StringUtil.getDificultyString(difficulty); //Create a string with difficulty * "0" 
+//		while(!hash.substring( 0, difficulty).equals(target)) {
+//			nonce ++;
+//			hash = calculateHash();
+//		}
+//		System.out.println("Block Mined!!! : " + hash);
+//	}
+//	public boolean addTransaction(Transaction transaction) {
+//		//process transaction and check if valid, unless block is genesis block then ignore.
+//		if(transaction == null) return false;		
+//		if((!"0".equals(previousHash))) {
+//			if((transaction.processTransaction() != true)) {
+//				System.out.println("Transaction failed to process. Discarded.");
+//				return false;
+//			}
+//		}
+//
+//		transactions2.add(transaction);
+//		System.out.println("Transaction Successfully added to Block");
+//		return true;
+//	}
 }

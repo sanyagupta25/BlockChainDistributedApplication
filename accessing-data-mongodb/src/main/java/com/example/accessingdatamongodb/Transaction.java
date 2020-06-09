@@ -3,9 +3,15 @@ package com.example.accessingdatamongodb;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Transaction {
 	
+	
+
 	public String transactionId; //Contains a hash of transaction*
 	public PublicKey sender; //Senders address/public key.
 	public PublicKey reciepient; //Recipients address/public key.
@@ -25,7 +31,11 @@ public class Transaction {
 		this.inputs = inputs;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Transaction [transactionId=" + transactionId + ", sender=" + sender + ", reciepient=" + reciepient
+				+ ", value=" + value + ", signature=" + Arrays.toString(signature) + "]";
+	}
 
 	public boolean processTransaction() {
 		
