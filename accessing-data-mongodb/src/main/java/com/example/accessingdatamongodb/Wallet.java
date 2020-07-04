@@ -9,6 +9,7 @@ import java.security.SecureRandom;
 import java.security.Security;
 import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +17,26 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-@Configuration
+
 public class Wallet {
 	
 	public PrivateKey privateKey;
 	public PublicKey publicKey;
+	
+	public String toStringpublic() {
+		PublicKey key = publicKey;
+		byte[] byte_pubkey = key.getEncoded();
+		String keyString = new String(Base64.getEncoder().encode(byte_pubkey));
+		return keyString;
+	}
+	public String toStringprivate() {
+		PrivateKey key = privateKey;
+		byte[] byte_pubkey = key.getEncoded();
+		String keyString = new String(Base64.getEncoder().encode(byte_pubkey));
+		return keyString;
+	}
+
+	
 	
 	public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 	
@@ -74,7 +90,7 @@ public class Wallet {
 			if(total > value) break;
 		}
 		
-		Transaction newTransaction = new Transaction(publicKey, _recipient , value, inputs);
+		Transaction newTransaction = new Transaction(publicKey, _recipient , value,inputs);
 		newTransaction.generateSignature(privateKey);
 		
 		for(TransactionInput input: inputs){

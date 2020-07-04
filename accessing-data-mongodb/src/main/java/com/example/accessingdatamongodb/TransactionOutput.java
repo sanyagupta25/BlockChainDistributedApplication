@@ -2,7 +2,12 @@ package com.example.accessingdatamongodb;
 
 import java.security.PublicKey;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+
 public class TransactionOutput {
+	
 	public String id;
 	public PublicKey reciepient; //also known as the new owner of these coins.
 	public float value; //the amount of coins they own
@@ -19,5 +24,10 @@ public class TransactionOutput {
 	//Check if coin belongs to you
 	public boolean isMine(PublicKey publicKey) {
 		return (publicKey == reciepient);
+	}
+	@Override
+	public String toString() {
+		return "TransactionOutput [id=" + id + ", reciepient=" + reciepient + ", value=" + value
+				+ ", parentTransactionId=" + parentTransactionId + "]";
 	}
 }

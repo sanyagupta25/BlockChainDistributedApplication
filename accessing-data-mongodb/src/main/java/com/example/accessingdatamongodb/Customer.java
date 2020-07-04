@@ -9,9 +9,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document(collection="Books")
+@Document(collection="Blocks")
 public class Customer {
-	//@hide
+	
 	//ArrayList<Transaction> transactions2 = new ArrayList<Transaction>();
 	@Id
 	public String hash;
